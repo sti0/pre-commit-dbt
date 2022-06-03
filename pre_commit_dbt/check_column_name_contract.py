@@ -22,15 +22,18 @@ def check_column_name_contract(
     models = get_models(catalog, filenames)
 
     for model in models:
+        metadata = model.node.get("metadata", {})
+        model_name = metadata.get("name", "")
         for col in model.node.get("columns", []).values():
             col_name = col.get("name")
             col_type = col.get("type")
 
             # Check all files of type dtype follow naming pattern
-            if dtype == col_type:
+            if re.match(dtype, col_type) is not None:
                 if re.match(pattern, col_name) is None:
                     status_code = 1
                     print(
+                        f"{model_name}: "
                         f"{col_name}: column is of type {dtype} and "
                         f"does not match regex pattern {pattern}."
                     )
@@ -39,6 +42,7 @@ def check_column_name_contract(
             elif re.match(pattern, col_name):
                 status_code = 1
                 print(
+                    f"{model_name}: "
                     f"{col_name}: column name matches regex pattern {pattern} "
                     f"and is of type {col_type} instead of {dtype}."
                 )
@@ -61,7 +65,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         "--dtype",
         type=str,
         required=True,
-        help="Expected data type for the matching columns.",
+        help="Expected data type or pattern for the matching columns.",
     )
 
     args = parser.parse_args(argv)

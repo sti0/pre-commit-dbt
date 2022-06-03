@@ -10,6 +10,35 @@ TESTS = (
     (["aa/bb/with_boolean_column_without_prefix.sql"], "is_.*", "boolean", True, 1),
     (["aa/bb/without_boolean_column_with_prefix.sql"], "is_.*", "boolean", True, 1),
     (["aa/bb/without_boolean_column_without_prefix.sql"], "is_.*", "boolean", True, 0),
+    (
+        ["aa/bb/with_varchar_column_with_prefix.sql"],
+        "txt_.*",
+        "VARCHAR\(\\d+\)",
+        True,
+        0,
+    ),
+    (["aa/bb/with_varchar_column_with_prefix.sql"], "txt_.*", "VARCHAR\(10\)", True, 0),
+    (
+        ["aa/bb/with_decimal_column_with_prefix.sql"],
+        "amt_.*",
+        "DECIMAL\(\\d+,[^0]\)",
+        True,
+        0,
+    ),
+    (
+        ["aa/bb/with_decimal_column_with_prefix.sql"],
+        "cnt_.*",
+        "DECIMAL\(\\d+,0\)",
+        True,
+        0,
+    ),
+    (
+        ["aa/bb/with_decimal_column_without_prefix.sql"],
+        "cnt_.*",
+        "DECIMAL\(\\d+,0\)",
+        True,
+        1,
+    ),
 )
 
 

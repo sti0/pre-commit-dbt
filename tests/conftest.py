@@ -251,6 +251,25 @@ CATALOG = {
                 "COL2": {"type": "TEXT", "name": "COL2"},
             },
         },
+        "model.test.with_varchar_column_with_prefix": {
+            "metadata": {},
+            "columns": {
+                "txt_abc": {"type": "VARCHAR(10)", "name": "txt_abc"},
+            },
+        },
+        "model.test.with_decimal_column_with_prefix": {
+            "metadata": {},
+            "columns": {
+                "amt_volume": {"type": "DECIMAL(18,9)", "name": "amt_volume"},
+                "cnt_orders": {"type": "DECIMAL(18,0)", "name": "cnt_orders"},
+            },
+        },
+        "model.test.with_decimal_column_without_prefix": {
+            "metadata": {},
+            "columns": {
+                "orders": {"type": "DECIMAL(18,0)", "name": "orders"},
+            },
+        },
     },
     "sources": {
         "source.test.ff.with_catalog_columns": {},
