@@ -18,7 +18,7 @@ def check_column_name_contract(
     pattern: str,
     dtype: str,
     catalog: Dict[str, Any],
-    check_every_column_for_dtype: bool,
+    skip_check_every_column_for_dtype: bool,
 ) -> int:
     status_code = 0
     sqls = get_filenames(paths, [".sql"])
@@ -33,7 +33,10 @@ def check_column_name_contract(
             col_type = col.get("type")
 
             # Check all columns of type dtype follow naming pattern
-            if check_every_column_for_dtype and re.match(dtype, col_type) is not None:
+            if (
+                not skip_check_every_column_for_dtype
+                and re.match(dtype, col_type) is not None
+            ):
                 if re.match(pattern, col_name) is None:
                     status_code = 1
                     print(
@@ -73,10 +76,10 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     )
 
     parser.add_argument(
-        "--check_every_column_for_dtype",
+        "--skip_check_every_column_for_dtype",
         type=boolean,
         required=False,
-        default=True,
+        default=False,
         help="Check if data type matches every columns pattern.",
     )
 
@@ -93,7 +96,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         pattern=args.pattern,
         dtype=args.dtype,
         catalog=catalog,
-        check_every_column_for_dtype=args.check_every_column_for_dtype,
+        skip_check_every_column_for_dtype=args.skip_check_every_column_for_dtype,
     )
 
 
