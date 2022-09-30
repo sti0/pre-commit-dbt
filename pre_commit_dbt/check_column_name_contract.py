@@ -33,11 +33,11 @@ def check_column_name_contract(
             col_type = col.get("type")
 
             # Check all columns of type dtype follow naming pattern
-            if (
-                not skip_check_every_column_for_dtype
-                and re.match(dtype, col_type) is not None
-            ):
-                if re.match(pattern, col_name) is None:
+            if re.match(dtype, col_type) is not None:
+                if (
+                    not skip_check_every_column_for_dtype
+                    and re.match(pattern, col_name) is None
+                ):
                     status_code = 1
                     print(
                         f"{model_name}: "
