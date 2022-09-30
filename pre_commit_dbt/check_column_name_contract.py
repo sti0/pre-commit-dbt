@@ -77,7 +77,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
 
     parser.add_argument(
         "--skip_check_every_column_for_dtype",
-        type=boolean,
+        type=bool,
         required=False,
         default=False,
         help="Check if data type matches every columns pattern.",
